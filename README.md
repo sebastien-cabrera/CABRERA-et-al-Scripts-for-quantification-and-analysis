@@ -1,4 +1,4 @@
-# Establishment of an optimized and automated workflow for whole brain probing of neuronal activity
+# Establishment of an optimized and automated workflow for whole brain probing of neuronal activities
 
 Behaviors are encoded by widespread neural circuits within the brain that change with age and experience. Immunodetection of the immediate early gene c-Fos has been successfully used for decades to reveal neural 
 circuits active during specific tasks or conditions. Our objectives here were to develop and benchmark a workflow that circumvents classical temporal and spatial limitations associated with c-Fos quantification. 

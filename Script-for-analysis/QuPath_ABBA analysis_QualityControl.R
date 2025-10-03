@@ -14,7 +14,7 @@ library("dplyr")
 library("ggpubr")
 
 #### LOCATING AND LOADING DATA ################################################################################################
-path <-"C:/folder1/folder2/.../folder csv files/" #indicate folder location
+path <-"C:/Users/Eq.Raineteau_2023/Desktop/Soumission papier 2 octobre 2025/test pour le quality control/" #indicate folder location
 List<-dir(path, pattern = "*.csv") #make a list of all csv files contained within the folder and run the loop below
 for (file in 1:as.numeric(length(List))){
 inputfile <- List[file]
@@ -47,12 +47,14 @@ data1$Slices <- substring(data1$Image, regexpr("*N", data1$Image)+2)
 #######################################################################################################################
 #### SELECT ATLAS OR REGIONS OF INTEREST TO BE ANALALYZED #############################################################
 #######################################################################################################################
+#Define all regions
 #Define gray matter regions
+Atlastot <- subset(data1, data1$Parent== "root") #to keep all c-Fos+ cells for percentage calculation in specific regions (See panel D & E)
 AtlasGM <- subset(data1, data1$Parent== "Cerebral cortex" | data1$Parent== "Cerebral nuclei" | data1$Parent== "Mibrain") #to keep relevant regions defining "gray matter" (see panels A and B) 
 #Define white matter (WM) regions
 AtlasWM <- subset(data1, data1$Name== "corpus callosum, body" | data1$Name== "corpus callosum, anterior forceps" | data1$Name== "anterior commissure, olfactory limb" | data1$Name== "internal capsule") #to keep relevant regions defining "white matter" tracts (see panel D) 
-#Define ventricular system (VS) regions
-AtlasVS <- subset(data1, data1$Parent== "ventricular systems") #to keep only relevant rows for ventricular system (See panel E)
+#Define lateral ventricle (LV) regions
+AtlasLV <- subset(data1, data1$Name== "lateral ventricle") #to keep only relevant rows for ventricular system (See panel E)
 #Define simplified Atlas regions
 SimplAtlas <- subset(data1, data1$Name== "Thalamus" | data1$Name== "Isocortex" | data1$Name== "Olfactory area"
           | data1$Name== "Hippocampal formation" | data1$Name== "Cortical subplate"
@@ -65,7 +67,7 @@ SimplAtlas <- subset(data1, data1$Name== "Thalamus" | data1$Name== "Isocortex" |
 #######################################################################################################################
 # THE FOLLOWING 3 GRAPHS ARE FOR DETECTING MISSING SECTIONS, BROKEN SECTIONS OR MALFUNCTIONING CLASSIFIER
 #create a plot with sum cfos per section (QC Goal: to detect broken or missing sections) 
-Sumd <- aggregate(Num.cfos~Slices, AtlasGM, sum)   
+Sumd <- aggregate(Num.cfos~Slices, Atlastot, sum)   
 p1 <- ggplot(Sumd, aes(x = as.double(Slices), y=Num.cfos, fill=as.double(Slices)))+
   geom_col(position = "dodge")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
@@ -73,15 +75,15 @@ p1 <- ggplot(Sumd, aes(x = as.double(Slices), y=Num.cfos, fill=as.double(Slices)
   ylim(0, 45000)+
   ggtitle("Num c-Fos+ cells/section")
 #create a plot with density cfos per section (QC Goal: to detect broken or missing sections) 
-Meandensity <- aggregate(density~Slices, AtlasGM, mean) 
+Meandensity <- aggregate(density~Slices, Atlastot, mean) 
 p2 <- ggplot(Meandensity, aes(x = as.double(Slices), y=density, fill=as.double(Slices)))+
   geom_col(position = "dodge")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
   ylim(0, 1550)+
   ggtitle("Density c-Fos+ cells/section")
 #create a plot representing % of artefact per section among total number of detected cells (QC Goal: to detect Classifier malfunction)
-Sumtot <- aggregate(Num.Detections~Slices, AtlasGM, sum)
-Sumartefact <- aggregate(Num.artéfact~Slices, AtlasGM, sum)    
+Sumtot <- aggregate(Num.Detections~Slices, Atlastot, sum)
+Sumartefact <- aggregate(Num.artéfact~Slices, Atlastot, sum)    
 Sumartefact$percentage <-Sumartefact$Num.artéfact/Sumtot$Num.Detections*100
 p3 <- ggplot(Sumartefact, aes(x= as.double(Slices), y=percentage, fill=as.double(Slices)))+
   geom_col(position = "dodge")+
@@ -93,22 +95,23 @@ p3 <- ggplot(Sumartefact, aes(x= as.double(Slices), y=percentage, fill=as.double
 # THE FOLLOWING 2 GRAPHS ALLOW DETECTING SUBOPTIMAL ATLAS REGISTRATION (values >5% indicate sections requiring attention for registration refinement)  
 
 # to calculate % of cfos cells within ventricles
-SumVS <- aggregate(Num.cfos~Slices, AtlasVS, sum)
-SumVS <- merge(Sumd, SumVS, by = "Slices")
-SumVS$percentage <-SumVS$Num.cfos.y/SumVS$Num.cfos.x*100  
-p4 <- ggplot(SumVS, aes(x= as.double(Slices), y=percentage, fill=as.double(Slices)))+
+SumLV <- aggregate(Num.cfos~Slices, AtlasLV, sum)
+SumLV <- merge(Sumd, SumLV, by = "Slices")
+SumLV$percentage <-SumLV$Num.cfos.y/SumLV$Num.cfos.x*100  
+p4 <- ggplot(SumLV, aes(x= as.double(Slices), y=percentage, fill=as.double(Slices)))+
   geom_col(position = "dodge")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
-  geom_hline(yintercept=5, linetype="dotdash", color = "red", size = 1)+
+  geom_hline(yintercept=5, linetype="dotdash", color = "red", linewidth = 1)+
   scale_fill_viridis(5)+
   ggtitle("% c-Fos+ cells in VS (values >5% require attention)")
 # to calculate % of cfos cells within fiber tracts 
 Sumtract <- aggregate(Num.cfos~Slices, AtlasWM, sum)
-Sumtract$percentage <-Sumtract$Num.cfos/Sumd$Num.cfos*100  
+Sumtract <- merge(Sumd, Sumtract, by = "Slices")
+Sumtract$percentage <-Sumtract$Num.cfos.y/Sumtract$Num.cfos.x*100  
 p5 <- ggplot(Sumtract, aes(x= as.double(Slices), y=percentage, fill=as.double(Slices)))+
   geom_col(position = "dodge")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
-  geom_hline(yintercept=5, linetype="dotdash", color = "red", size = 1)+
+  geom_hline(yintercept=5, linetype="dotdash", color = "red", linewidth = 1)+
   scale_fill_viridis(5)+
   ggtitle("% c-Fos+ cells in WM (values >5% require attention)")
 
@@ -131,7 +134,8 @@ titre <- paste("Animal ", nop)
 plottosave <- annotate_figure(plottosave, top = text_grob(paste("Animal ", nop), face = "bold", size = 15))
 plottosave 
 # save all plot sin appropriate folder
-setwd("/folder1/.../quality control saving folder/") # specify folder to save png files all png files
+setwd("/Users/Eq.Raineteau_2023/Desktop/Soumission papier 2 octobre 2025/test pour le quality control/dossier bargraph/") # specify folder to save png files all png files
 ggsave(paste(nop, ".png"), plot = last_plot(), width = 20, height = 12)
 }
+
 

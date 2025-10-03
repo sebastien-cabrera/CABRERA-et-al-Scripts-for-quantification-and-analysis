@@ -196,5 +196,6 @@ selectAnnotations()
               '"watershedPostProcess": true,  "cellExpansionMicrons": 0.1,  "includeNuclei": true,'+
               '"smoothBoundaries": true,  "makeMeasurements": true}');
 }       
-qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "acronym", false); // Importation of ABBA registration results on all slices 
-                                                                                                     //as described in abba-documentation website.
+
+// Importation of ABBA registration results on all slices as described in abba-documentation website
+qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "acronym", false);

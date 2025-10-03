@@ -14,7 +14,7 @@ library("dplyr")
 library("ggpubr")
 
 #### LOCATING AND LOADING DATA ################################################################################################
-path <-"C:/Users/Eq.Raineteau_2023/Desktop/Soumission papier 2 octobre 2025/test pour le quality control/" #indicate folder location
+path <-"C:/folder1/folder2/.../folder csv files/" #indicate folder location
 List<-dir(path, pattern = "*.csv") #make a list of all csv files contained within the folder and run the loop below
 for (file in 1:as.numeric(length(List))){
 inputfile <- List[file]
@@ -134,8 +134,9 @@ titre <- paste("Animal ", nop)
 plottosave <- annotate_figure(plottosave, top = text_grob(paste("Animal ", nop), face = "bold", size = 15))
 plottosave 
 # save all plot sin appropriate folder
-setwd("/Users/Eq.Raineteau_2023/Desktop/Soumission papier 2 octobre 2025/test pour le quality control/dossier bargraph/") # specify folder to save png files all png files
+setwd("/Users/folder1/.../quality control saving folder/") # specify folder to save png files all png files
 ggsave(paste(nop, ".png"), plot = last_plot(), width = 20, height = 12)
 }
+
 
 

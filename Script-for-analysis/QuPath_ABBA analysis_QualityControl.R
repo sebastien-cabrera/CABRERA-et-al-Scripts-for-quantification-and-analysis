@@ -42,7 +42,7 @@ data1$density <- data1$Num.cfos/data1$Area.µm.2*1000000
 data1$density <- as.numeric(data1$density)
 
 #create a new column containing slide number (extracted from Image name)
-data1$Slices <- substring(data1$Image, regexpr("*N", data1$Image)+2)
+data1$Slices <- substring(data1$Image, regexpr("*N_", data1$Image)+2)
 
 #######################################################################################################################
 #### SELECT ATLAS OR REGIONS OF INTEREST TO BE ANALALYZED #############################################################
@@ -137,6 +137,7 @@ plottosave
 setwd("/Users/folder1/.../quality control saving folder/") # specify folder to save png files all png files
 ggsave(paste(nop, ".png"), plot = last_plot(), width = 20, height = 12)
 }
+
 
 
 

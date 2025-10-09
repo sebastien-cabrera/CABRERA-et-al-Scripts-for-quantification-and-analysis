@@ -33,4 +33,4 @@ runPlugin('qupath.imagej.detect.cells.WatershedCellDetection', '{"detectionImage
           '"smoothBoundaries": true,  "makeMeasurements": true}');
 
 // Importation of ABBA registration results on all slices as described in abba-documentation website
-qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "acronym", false); 
+qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "name", false); 

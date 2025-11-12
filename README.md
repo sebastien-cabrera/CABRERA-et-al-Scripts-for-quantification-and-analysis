@@ -63,4 +63,5 @@ this script allows choosing the imageJ automatic thresholding method to use (i.e
 
 
 **All files and data in this github are available under the terms of the Creative Commons Attribution internationnal 4.0 (CC BY 4.0)**
+https://creativecommons.org/licenses/by/4.0/
 

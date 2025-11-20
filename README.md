@@ -65,7 +65,8 @@ this script allows choosing the imageJ automatic thresholding method to use (i.e
 
 These scripts and the associated documentation were developed by CABRERA et al. leading by Olivier RAINETEAU, Nathalie MANDAIRON and Pierre-Hervé LUPPI as part of the following scientific article : 
 
-Establishment of an optimized and automated workflow for whole brain probing of neuronal activity
+**Establishment of an optimized and automated workflow for whole brain probing of neuronal activity**
+
 Sébastien CABRERA, Nicolas VACHOUD, Renato MACIEL, Marine BREUILLY, Stevenson DESMERCIERES, Anis CATALDI, Geraldine MEYER-DILHET, Salma ELLOUZE, Julien COURCHET, Pierre-Hervé LUPPI, Nathalie MANDAIRON, Olivier RAINETEAU. 
 Journal of publication : BioRxiv for the time being (publication in progress in F1000 Neubias - the bioimage Analysts Network, DOI available soon)
 

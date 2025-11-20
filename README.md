@@ -71,7 +71,9 @@ Sébastien CABRERA, Nicolas VACHOUD, Renato MACIEL, Marine BREUILLY, Stevenson D
 Journal of publication : BioRxiv for the time being (publication in progress in F1000 Neubias - the bioimage Analysts Network, DOI available soon)
 
 **Licenses** 
+
 MIT License (see LICENSE-MIT) and Creative Commons CC BY 4.0 (see LICENSE-CC-BY)
 
 **Recommended academic attribution**
+
 If you use these scripts or the documentation in your work or publications, please cite this article and this GitHub repository.

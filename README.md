@@ -61,7 +61,16 @@ This script follows the same workflow as the previous one but introduces the use
 
 this script allows choosing the imageJ automatic thresholding method to use (i.e. Mean, Otsu, Percentile…) for automatic cell detection. For threshold calculation, 60 rectangles (1000*1000 pixels) are randomly generated on each section, which allow extracting signal mean intensities which are saved within an ‘output’ .txt folder. ImageJ values are then used by the QuPath software to apply the value. To limit influences of artifactual values (i.e. corresponding to rectangles partly located beside the section or containing brightly fluorescent dusts), an interval for the mean validation is imposed after the 10th rectangle is calculated. To be brief, the intensity value of the 11th selected rectangle must be between 0.1 and 1,9 * mean of 10 first rectangles. If the value is validated, it will be included in the calculation and this interval will evolve as the control progresses. All valid intensity values are accumulated to generate one and only mean (named “reamean” in the script). For each section, this process is repeated 4 times, and the mean of these repetitions determines the threshold used. On average, around 30-40 rectangles are selected over 60 to participate in threshold value elaboration. When the number of rectangles validated is inferior to 20, the script defines the threshold as 10000000 in order to stop the analysis for visual inspection of the sections.
 
+# General information, Licenses and recommended citation.
 
-**All files and data in this github are available under the terms of the Creative Commons Attribution internationnal 4.0 (CC BY 4.0)**
-https://creativecommons.org/licenses/by/4.0/
+These scripts and the associated documentation were developed by CABRERA et al. leading by Olivier RAINETEAU, Nathalie MANDAIRON and Pierre-Hervé LUPPI as part of the following scientific article : 
 
+Establishment of an optimized and automated workflow for whole brain probing of neuronal activity
+Sébastien CABRERA, Nicolas VACHOUD, Renato MACIEL, Marine BREUILLY, Stevenson DESMERCIERES, Anis CATALDI, Geraldine MEYER-DILHET, Salma ELLOUZE, Julien COURCHET, Pierre-Hervé LUPPI, Nathalie MANDAIRON, Olivier RAINETEAU. 
+Journal of publication : BioRxiv for the time being (publication in progress in F1000 Neubias - the bioimage Analysts Network, DOI available soon)
+
+**Licenses** 
+MIT License (see LICENSE-MIT) and Creative Commons CC BY 4.0 (see LICENSE-CC-BY)
+
+**Recommended academic attribution**
+If you use these scripts or the documentation in your work or publications, please cite this article and this GitHub repository.

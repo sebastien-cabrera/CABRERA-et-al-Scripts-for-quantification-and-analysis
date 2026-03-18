@@ -11,7 +11,7 @@ of the results. Altogether, this automated workflow accessible to all labs with 
 in various contexts.
 
 # Corresponding Authors
-Cabrera Sébastien  (sebastien.cabrera@etu.univ-lyon1.fr; sebastien-75@wanadoo.fr)
+Cabrera Sébastien  (sebastien-75@wanadoo.fr)
 
 Raineteau Olivier  (olivier.raineteau@inserm.fr)
 
